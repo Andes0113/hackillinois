@@ -3,8 +3,10 @@ import './App.css'
 import axios from 'axios'
 import logo from './assets/logo.png'
 
+const lambdaUrl = 'https://tbdjvc4sucooyf3jvfjkmwodqe0twsqu.lambda-url.us-east-2.on.aws/';
+
 async function generateImage(urls, prompt) {
-  const response = await axios.post('https://rembrandt.alexfprowe.com/generate', {
+  const response = await axios.post(lambdaUrl, {
     urls,
     prompt,
   });
