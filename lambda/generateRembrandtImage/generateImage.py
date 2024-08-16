@@ -51,12 +51,7 @@ def generate_image(prompt, qualities):
 def handler(event, context):
     body = json.loads(event['body'])
     print('Grabbing image qualities...')
-    try:
-
-        qualities = describe_image(body['urls'])
-        print('Generating image...')
-        photo_url = generate_image(body['prompt'], qualities)
-        return {"success": True, "url": photo_url}
-    except Exception as e:
-        print(e)
-        return {"success": False}
+    qualities = describe_image(body['urls'])
+    print('Generating image...')
+    photo_url = generate_image(body['prompt'], qualities)
+    return { 'success': True, 'url': photo_url }

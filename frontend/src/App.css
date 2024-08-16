@@ -168,4 +168,6 @@
   padding-bottom: 10rem;
 }
 
-
+#error {
+  color: #D22B2B;
+}

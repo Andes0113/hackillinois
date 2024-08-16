@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import axios from 'axios'
 import logo from './assets/logo.png'
+import spinner from './assets/spinner.gif';
 
 const lambdaUrl = 'https://tbdjvc4sucooyf3jvfjkmwodqe0twsqu.lambda-url.us-east-2.on.aws/';
 
@@ -22,21 +23,22 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  console.log(inputUrls);
-
 
   async function getImage() {
+    console.log('Getting image...');
     setLoading(true);
     try {
       const urls = inputUrls.slice(0, -1);
       if (urls.length > 0 && prompt != '') {
         const output = await generateImage(urls, prompt);
-        if (output.success) setUrl(output.url);  
+        if (output.success) setUrl(output.url);
+
+        console.log('Success getting image');
       } else {
         setError(true);
       }
     } catch(err) {
-      console.log(err);
+      console.log('Error getting image:', err);
       setError(true);
     } finally {
       setLoading(false);
@@ -56,10 +58,8 @@ function App() {
 
   return (
     <div id="container">
-
-      <div id = "content">
-
-        <div id = "header">
+      <div id="content">
+        <div id="header">
           <img src={logo} height="100rem"/>
         </div>
 
@@ -73,7 +73,7 @@ function App() {
                 key={idx} />
             ))}
           </div>
-          <div id = "inputUrl">
+          <div id="inputUrl">
             <label htmlFor="inputUrl">Reference Image URL:  </label>
               <input
                 name="query"
@@ -85,7 +85,7 @@ function App() {
             </button>
           </div>
 
-          <div id = "prompt">
+          <div id="prompt">
             <label htmlFor="prompt">Image Generation Prompt:  </label>
             <textarea name="query" value={prompt} onChange={(e) => setPrompt(e.target.value)} />
           </div>
@@ -93,17 +93,13 @@ function App() {
           <button disabled={loading} onClick={() => getImage()}>
             Generate
           </button>
+          {error && <p id="error">Error Generating Image</p>}
         </div>
       </div>
 
       <div id="output">
-        {url != '' && !loading &&
-          <img id="image" src={url} />
-        }
-        {loading && 
-          <img src={"https://media.discordapp.net/attachments/1210798619045793854/1211207844410560532/output-onlinegiftools_1.gif?ex=65ed5c35&is=65dae735&hm=99bc39ef4efdbafce3f8812b229510953a5b0895da58204d80cdc074c84b098f&=&width=1152&height=864"}/>
-        }
-
+        {url != '' && !loading && <img id="image" src={url} /> }
+        {loading && <img src={spinner}/>}
       </div>
     </div>
   )
