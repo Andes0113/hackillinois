@@ -4,7 +4,7 @@ Rembrandt provides an interface for generating stock images for presentations, d
 
 Created for HackIllinois 2024.
 
-Built with FastAPI and React and using AWS/EC2 for hosting. 
+Built with React using AWS Lambda as a backend.
 
 [Try it for yourself](https://alexfprowe.com/rembrandt/)
 
